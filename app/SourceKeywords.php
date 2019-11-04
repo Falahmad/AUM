@@ -15,4 +15,9 @@ class SourceKeywords extends Model
     ];
 
     public $timestamps = false;
+
+    public function Sources() {
+        return $this->belongsTo('App\Source', 'source_id');
+    }
+
 }

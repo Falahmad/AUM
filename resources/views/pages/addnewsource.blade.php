@@ -19,7 +19,7 @@
                                     </span>
                                 @endif
                             </div>
-                            
+
                         </div>
                         <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
@@ -46,10 +46,20 @@
                         <div id="KeywordsBody" class="form-group md-0">
                             <div class="form-group row" style="display: none;" id="CloneTR">
                                 <input type="hidden" name="keywords[]" id="keywords" required/>
-                                <label for="resKeyword" class="col-md-5 col-form-label">Keyword</label>
+                                @if ($errors->has('keywords'))
+                                    <span class="invalid-feedback">
+                                        <strong>Error on keyword</strong>
+                                    </span>
+                                @endif
+                                <label class="col-md-5 col-form-label">Keyword</label>
                                 <div class="form-group row col-md-6">
                                     <div class="col-md-6">
-                                        <input id="resKeyword" type="text" autocomplete="off" class="form-control{{ $errors->has('resKeyword') ? ' is-invalid' : '' }}" name="resKeyword" value="{{ old('resKeyword') }}">
+                                        <input
+                                            type="text"
+                                            autocomplete="off"
+                                            class="form-control{{ $errors->has('resKeyword') ? ' is-invalid' : '' }}"
+                                            oninput="OnKeywordChanges(this)"
+                                        >
                                     </div>
                                     <button type="button" name="DeleteKeyword" class="btn btn-danger btn-block col-md-6" onclick="DeleteKeyWord(this)">
                                         Delete keyword
@@ -82,6 +92,12 @@
 
 @section('script')
 <script>
+
+    function OnKeywordChanges(input) {
+        var keyWord = input.value;
+        input.parentElement.parentElement.parentElement.childNodes[1].value = keyWord;
+    }
+
     function OnClickAddNewKeyword() {
         var courseBody = document.getElementById('KeywordsBody');
         var div = document.getElementById('CloneTR');

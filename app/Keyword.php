@@ -12,4 +12,8 @@ class Keyword extends Model
     ];
 
     public $timestamps = false;
+
+    public function SourcesRelation() {
+        return $this->belongsToMany('App\Source', 'source_keywords');
+    }
 }

@@ -35,57 +35,61 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header font-weight-bold" style="text-align:center; background-color:red; color:white;">Login</div>
                     <div class="card-body">
-                        <form  method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="form-group" class="center_div" style="width: 50%; margin: 0 auto; ; height: 50px">
-                                <input autocomplete="false" id="userId" type="text" class="form-control{{ $errors->has('userId') ? ' is-invalid' : '' }}" name="userId" value="{{ old('userId') }}" style="
-                                text-align:center;
-                                outline: 0;
-                                border-width: 0 0 2px;
-                                border-color: light-gray;
-                                background-color: clear"
-                                placeholder="Email address"
-                                required autofocus>
-                                @if ($errors->has('userId'))
-                                    <span class="invalid-feedback">
-                                        <strong>Invalid email address</strong>
-                                    </span>
-                                @endif
-                            </div>
-                            <div class="form-group" class="center_div" style="margin: 0 auto; width: 50%; height: 50px" center>
-                                    <input autocomplete="false" id="password" autocomplete="off" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" style="
-                                    text-align:center;
-                                    outline: 0;
-                                    border-width: 0 0 2px;
-                                    border-color: light-gray;
-                                    background-color: clear"
-                                    placeholder="Password"
-                                    required>
-                                    @if ($errors->has('password'))
-                                        <span class="invalid-feedback">
-                                            <strong>Wronge password</strong>
-                                        </span>
-                                    @endif
-                            </div>
-                            <div class="row justify-content-center" style="margin: 0 auto; width: 50%;">
-                                <button type="submit" class="btn" style="
-                                width: 100%;
-                                border-color: black;
-                                border-width: 1;
-                                background-color: clear;
-                                font-weight: bold;
-                                color: gray
-                                ">
-                                    Login
-                                </button>
-                            </div>
-                        </form>
+                        <div class="row justify-content-center form-group" >
+                            <input
+                                class="center justify-content-center col-md-12"
+                                type="text"
+                                name="SearchInput"
+                                id="SearchInput"
+                                style="text-align:center;"
+                                placeholder="What are you looking for?"
+                                value="{{ $keyword }}"
+                            />
+                        </div>
+                        <div class="row justify-content-center form-group" style="margin: 0 auto; width: 50%;">
+                            <button
+                            class="btn btn-block btn-info"
+                            onclick="onPressSearch()"
+                            > Search </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row form-group">
+            <table class="table">
+                    <tbody>
+                        @foreach($queue as $result)
+                            <tr><td>
+                                <div class="row form-group">
+                                    <p1>{{ $result['name'] }}</p1>
+                                </div>
+                                <div class="row form-group">
+                                    <p3>{{ $result['description'] }}</p3>
+                                </div>
+                                <div class="row form-group">
+                                    <a href="{{ $result['site_link'] }}">{{ $result->site_link }}</a>
+                                </div>
+                            </td></tr>
+                        @endforeach
+                    </tbody>
+            </table>
+        </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+
+        function onPressSearch() {
+            var searchKeyWord = document.getElementById('SearchInput').value;
+
+            var routeURL = '{{ route('RedirectToHome')}}';
+            routeURL += "?keyword="+searchKeyWord;
+            window.location.replace(routeURL);
+        }
+
+    </script>
 @endsection

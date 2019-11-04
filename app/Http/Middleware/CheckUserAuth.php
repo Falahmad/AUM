@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 use Auth;
 use Closure;
+use Session;
 
 class CheckUserAuth
 {
@@ -13,10 +14,11 @@ class CheckUserAuth
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-        if(!Auth::check()) {
-            return redirect()->route('/', ['locale'=>app()->getLocale()]);
+    public function handle($request, Closure $next) {
+
+        $userName = Session::get('userName')[0];
+        if(!$userName) {
+            return redirect()->route('/');
         }
         return $next($request);
     }

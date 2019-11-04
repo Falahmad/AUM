@@ -13,21 +13,11 @@ class UserController extends Controller
         $this->Validation($request);
 
         $checkUser = $this->CheckUserId($request);
-        // $checkUser = 'Success';
-        // return response()->json([
-        //     'salt'=> base64_encode(md5($request->input('password'), true))
-        // ]);
+
         Session::flush();
         if($checkUser == 'Success') {
-            // $userName = $request['userId'];
-            $userName = '111';
+            $userName = $request['userId'];
             Session::push('userName', $userName);
-            $password = 'fahed123';
-            // return response()->json([
-            //     'hash'=> \Hash::make('$password'),
-            //     'auth'=> Auth::attempt(['unique_id'=> $userName, 'password'=> $password])
-            // ]);
-            Auth::attempt(['unique_id' => $userName, 'password' => $password]);
             return redirect('/');
         } else {
             return redirect()->route('error', array('error'=> $checkUser));
@@ -37,7 +27,7 @@ class UserController extends Controller
 
     function Validation($request) {
         return $this->validate($request, [
-            'userId'=>'required|number',
+            'userId'=>'required|string',
             'password'=>'required|string|max:255'
         ]);
     }
