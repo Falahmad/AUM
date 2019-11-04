@@ -17,7 +17,7 @@ class CreateUserTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('age');
-            $table->string('uniqu_id')->unique();
+            $table->string('unique_id')->unique();
             $table->string('passowrd', 255);
             $table->string('salt', 255);
         });

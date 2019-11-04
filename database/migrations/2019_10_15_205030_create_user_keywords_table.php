@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserSourcesesTable extends Migration
+class CreateUserKeywordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class UserSourcesesTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_sources', function (Blueprint $table) {
+        Schema::create('user_keywords', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('source_id')->unsigned();
+            $table->integer('keyword_id')->unsigned();
             $table->integer('user_id')->unsigned();
         });
-        Schema::table('user_sources', function($table) {
-            $table->foreign('source_id')->references('id')->on('sources');
+
+        Schema::table('user_keywords', function($table) {
+            $table->foreign('keyword_id')->references('id')->on('keywords`');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

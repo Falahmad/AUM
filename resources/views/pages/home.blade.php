@@ -46,7 +46,7 @@
                                 border-width: 0 0 2px;
                                 border-color: light-gray;
                                 background-color: clear"
-                                placeholder="User ID"
+                                placeholder="Email address"
                                 required autofocus>
                                 @if ($errors->has('userId'))
                                     <span class="invalid-feedback">

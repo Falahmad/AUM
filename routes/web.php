@@ -11,5 +11,15 @@
 |
 */
 
+Route::group(['middleware'=> 'CheckUserAuth'], function() {
+    Route::get('/', 'PagesController@ViewHomePage');
+    // Route::get('/addnewsource', 'PagesController@AddNewSourcePage');
+    // Route::post('addnewsource', 'SourcesController@AddNewSource')->name('addnewsource');
+});
+Route::get('/addnewsource', 'PagesController@AddNewSourcePage');
+Route::post('addnewsource', 'SourcesController@AddNewSource')->name('addnewsource');
+
 Route::get('/', 'PagesController@ViewLoginPage');
-Route::post('login', 'PagesController@Login')->name('login');
+Route::post('login', 'UserController@LoginUser')->name('login');
+
+Route::get('error',['as'=>'error', 'uses'=>'PagesController@ViewErrorPage']); // Error Page
