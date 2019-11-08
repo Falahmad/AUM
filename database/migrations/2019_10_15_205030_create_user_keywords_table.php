@@ -16,12 +16,11 @@ class CreateUserKeywordsTable extends Migration
         Schema::create('user_keywords', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('keyword_id')->unsigned();
+            $table->string('keyword');
             $table->integer('user_id')->unsigned();
         });
 
         Schema::table('user_keywords', function($table) {
-            $table->foreign('keyword_id')->references('id')->on('keywords`');
             $table->foreign('user_id')->references('id')->on('users');
         });
     }

@@ -11,7 +11,7 @@ class UserKeywords extends Model
     protected $fillable = [
         'id',
         'user_id',
-        'keyword_id',
+        'keyword',
         'created_id',
         'updated_at'
     ];
