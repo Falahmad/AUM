@@ -16,7 +16,7 @@ Route::post('addnewsource', 'SourcesController@AddNewSource')->name('addnewsourc
 Route::get('RedirectToHome', 'PagesController@ViewIndex')->name('RedirectToHome');
 Route::get('checkeywords', 'KeywordsController@GetSuggestions')->name('checkeywords');
 
-Route::get('/whosearched', 'PagesController@WhoSearched')->name('checkeywords');
+Route::get('/whosearched', 'PagesController@WhoSearched')->name('whosearched');
 
 Route::get('/', 'PagesController@ViewIndex');
 Route::post('login', 'UserController@LoginUser')->name('login');

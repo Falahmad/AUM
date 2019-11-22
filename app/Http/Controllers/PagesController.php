@@ -37,6 +37,7 @@ class PagesController extends Controller {
     private function ViewHomePage() {
         $queue = array();
         $keyword = Input::get('keyword');
+
         if($keyword == null) {
             $queue = array();
         } else {
@@ -45,19 +46,58 @@ class PagesController extends Controller {
             $userSearch = new UserSearches();
             $userSearch->InsertNewSearch($keyword);
 
-            $relationKeywords = array();
             foreach($keywords as $k) {
                 $relations = $k->SourcesRelation;
                 foreach($relations as $relation) {
-                    array_push($relationKeywords, $relation);
+                    array_push($queue, $relation);
                 }
             }
-            $queue = $relationKeywords;
         }
+
+        $keywordForGoogle = str_replace(" ","+", $keyword);
+        $googleSearch = $this->CrawlFromGoogle($keywordForGoogle);
+        foreach($googleSearch as $google) {
+            array_push($queue, $google);
+        }
+
+        // return $queue;
 
         return view('pages.home')
         ->with('queue', $queue)
         ->with('keyword', $keyword);
+    }
+
+    public function CrawlFromGoogle($keyword) {
+        $url = 'https://www.googleapis.com/customsearch/v1';
+        $searchEngine = '&cx=009612237352166399699:oypptalmeya';
+        $key = '?key=AIzaSyAbm5YA2arT6pHzA4Ax5argeC2VxdQaR7Q'.$searchEngine;
+        $keyword = '&q='.$keyword;
+        $ch = curl_init();
+        $timeout = 5;
+        curl_setopt($ch, CURLOPT_URL, $url.$key.$keyword);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json'
+        ));
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $decoded = json_decode($response, true);
+
+        $array = array();
+        if(isset($decoded['items'])) {
+            $items = $decoded['items'];
+
+            foreach($items as $item) {
+                $objc = (Object) [
+                    'name'=>  $item['title'],
+                    'description'=> $item['snippet'],
+                    'site_link'=> $item['link']
+                ];
+                array_push($array, $objc);
+            }
+        }
+        return $array;
     }
 
     public function WhoSearched() {

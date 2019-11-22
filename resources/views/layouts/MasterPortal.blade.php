@@ -14,6 +14,7 @@
 
         <!-- Scripts -->
         {{--  <script src="{{ asset('js/app.js') }}" defer></script>  --}}
+        <script async src="https://cse.google.com/cse.js?cx=009612237352166399699:oypptalmeya"></script>
 
         <!-- Fonts -->
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">

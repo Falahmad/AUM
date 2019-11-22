@@ -84,13 +84,13 @@
                         @foreach($queue as $result)
                             <tr><td>
                                 <div class="row form-group">
-                                    <p1>{{ $result['name'] }}</p1>
+                                    <p1>{{ $result->name }}</p1>
                                 </div>
                                 <div class="row form-group">
-                                    <p3>{{ $result['description'] }}</p3>
+                                    <p3>{{ $result->description }}</p3>
                                 </div>
                                 <div class="row form-group">
-                                    <a href="{{ $result['site_link'] }}">{{ $result->site_link }}</a>
+                                    <a href="{{ $result->site_link }}">{{ $result->site_link }}</a>
                                 </div>
                             </td></tr>
                         @endforeach
@@ -121,7 +121,7 @@
                     keyword: keyword
                 },
                 success: function( data ) {
-                    //console.debug(data);
+                    console.debug(data);
                     var tableBody = document.getElementById('ResultRecordsBody');
                     while (tableBody.firstChild) {
                         tableBody.removeChild(tableBody.firstChild);
@@ -142,6 +142,9 @@
                             tableBody.appendChild(tableRow);
                         }
                     }
+                },
+                error: function(err) {
+                    console.debug(err);
                 }
             });
         }
